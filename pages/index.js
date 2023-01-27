@@ -15,6 +15,7 @@ export default function Home({ payload }) {
 
       <Container>
         <h1>Test</h1>
+        <hr />
         <Row>
           { payload.map(item => <CatalogItem item={ item } key={ `catalog-item-${ item.id }` } />) }
         </Row>
@@ -25,7 +26,7 @@ export default function Home({ payload }) {
 
 export async function getStaticProps() {
   const payload = await axios
-    .post('http://shop_proxy:4080/api/v1/public/products')
+    .post(process.env.API_HOST + '/api/v1/public/products')
     .then(({ data }) => {
       console.log(data);
       const { payload = null } = data;
