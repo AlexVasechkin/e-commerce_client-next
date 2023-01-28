@@ -24,7 +24,7 @@ export default function Home({ payload }) {
   )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const payload = await axios
     .post(process.env.API_HOST + '/api/v1/public/products')
     .then(({ data }) => {
