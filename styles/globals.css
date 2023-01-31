@@ -75,3 +75,46 @@
 .text-grey {
     color: #999;
 }
+
+header {
+    display: block;
+}
+
+footer {
+    margin-top: 30px;
+    padding: 15px 0;
+    background-color: #fafafa;
+}
+
+.header__offset__top {
+    padding-top: 60px;
+}
+
+.header__top-row {
+
+}
+
+.homepage__category__block__container {
+    padding-top: 30px;
+}
+
+.homepage__category__title {
+    text-transform: capitalize;
+}
+
+.header__navbar__main__section {
+    margin: 0;
+    padding: 10px 0;
+    width: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-color: #fafafa;
+}
+
+.header__navbar__main__section__container {
+    margin: 0 auto;
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-between;
+}
