@@ -1,9 +1,9 @@
 import Head from 'next/head'
+import Link from 'next/link';
 import { Container, Row } from 'react-bootstrap';
 import axios from 'axios';
-import CatalogItem from '@/components/catalog/catalog-item';
 
-export default function Home({ payload }) {
+export default function Home({ categories }) {
   return (
     <>
       <Head>
@@ -15,30 +15,45 @@ export default function Home({ payload }) {
 
       <Container>
         <div className={'header__offset__top'}></div>
-        {[...new Set(payload.map(item => item.productCategory.name))]
-          .map(categoryName =>
-            (
-              <div className={'homepage__category__block__container'}>
-                <h2 className={'homepage__category__title'}>{ `${categoryName}` }</h2>
-                <hr/>
-                <Row>
-                  {
-                    payload
-                      .filter(el => el.productCategory.name === categoryName)
-                      .map(product => <CatalogItem item={ product } key={ `catalog-item-${ product.id }` } />)
-                  }
-                </Row>
-              </div>
-            )
-          )
-        }
-      </Container>
 
-      <footer>
-        <div className={'container'}>
-          <div>&copy; Интернет-магазин &laquo;Военный стиль&raquo; 2023. Все права защищены. </div>
-        </div>
-      </footer>
+        <Row>
+          {categories.map(item => {
+            return (
+             <div className={'col-12 col-sm-4 col-md-3'}>
+               <Link href={'/catalog/' + item.alias}>
+                 <div className="homepage__product-category__container">
+                   <div className="catalog__item__image__row">
+                     <div className="catalog__item__image__container">
+                       <div className="catalog__item__image__substrate">
+                         <img className="catalog__item__image"
+                              src={ `${ item.picture }` } alt={ '' } />
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+               </Link>
+             </div>
+            )
+          })}
+        </Row>
+        {/*{[...new Set(payload.map(item => item.productCategory.name))]*/}
+        {/*  .map(categoryName =>*/}
+        {/*    (*/}
+        {/*      <div className={'homepage__category__block__container'}>*/}
+        {/*        <h2 className={'homepage__category__title'}>{ `${categoryName}` }</h2>*/}
+        {/*        <hr/>*/}
+        {/*        <Row>*/}
+        {/*          {*/}
+        {/*            payload*/}
+        {/*              .filter(el => el.productCategory.name === categoryName)*/}
+        {/*              .map(product => <CatalogItem item={ product } key={ `catalog-item-${ product.id }` } />)*/}
+        {/*          }*/}
+        {/*        </Row>*/}
+        {/*      </div>*/}
+        {/*    )*/}
+        {/*  )*/}
+        {/*}*/}
+      </Container>
 
       <header>
         <div className="header__navbar__main__section">
@@ -57,13 +72,19 @@ export default function Home({ payload }) {
           </div>
         </div>
       </header>
+
+      <footer>
+        <div className={'container'}>
+          <div>&copy; Интернет-магазин &laquo;Военный стиль&raquo; 2023. Все права защищены. </div>
+        </div>
+      </footer>
     </>
   )
 }
 
 export async function getServerSideProps() {
-  const payload = await axios
-    .post(process.env.API_HOST + '/api/v1/public/products')
+  const categories = await axios
+    .get(process.env.API_HOST + '/api/v1/public/product-category-pages')
     .then(({ data }) => {
       console.log(data);
       const { payload = null } = data;
@@ -71,5 +92,5 @@ export async function getServerSideProps() {
     })
   ;
 
-  return {props: { payload }};
+  return {props: { categories }};
 }
