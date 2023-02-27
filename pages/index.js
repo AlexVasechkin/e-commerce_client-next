@@ -20,18 +20,18 @@ function Home({ categories }) {
         <Row>
           {categories.map(item => {
             return (
-             <div className={'col-12 col-sm-4 col-md-3'} key={`cat-item-${item.id}`}>
+             <div className={'col-12 col-sm-4 col-md-3 mt-15'} key={`cat-item-${item.id}`}>
                <Link href={'/catalog/' + item.alias}>
-                 <div className="homepage__product-category__container">
-                   <div className="catalog__item__image__row">
-                     <div className="catalog__item__image__container">
-                       <div className="catalog__item__image__substrate">
-                         <img className="catalog__item__image"
-                              src={ `${ item.picture }` } alt={ '' } />
+                   <div className="homepage__product-category__container">
+                     <div className="catalog__item__image__row">
+                       <div className="catalog__item__image__container">
+                         <div className="catalog__item__image__substrate">
+                           <img className="catalog__item__image"
+                                src={ `${ item.picture }` } alt={ '' } />
+                         </div>
                        </div>
                      </div>
                    </div>
-                 </div>
                </Link>
              </div>
             )
