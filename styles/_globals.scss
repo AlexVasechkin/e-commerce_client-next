@@ -1,0 +1,48 @@
+@import "vars";
+
+.text-grey {
+    color: #999;
+}
+
+.mt-15 {
+    margin-top: 15px;
+}
+
+main {
+    margin: 0;
+    padding: 0;
+    min-width: 100%;
+    min-height: 100vh;
+}
+
+.screen-container {
+    width: 100%;
+    display: block;
+    margin: 0;
+    padding: 0;
+
+    @media screen and (min-width: $s-laptop + 1 + px) {
+        margin: 0 auto;
+        width: $s-laptop + px;
+    }
+
+    @media screen and (min-width: $s-macbook + 1 + px) {
+        width: $s-macbook + px;
+    }
+
+    @media screen and (min-width: $s-full-hd + 1 + px) {
+        width: $s-full-hd + px;
+    }
+}
+
+.page-headline-row {
+    width: 100%;
+    display: block;
+    margin: 0;
+    padding: 0 15px;
+}
+
+#main {
+    padding-top: 50px;
+    min-height: 92vh;
+}

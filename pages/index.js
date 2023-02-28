@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { Container, Row } from 'react-bootstrap';
 import axios from 'axios';
 import withLayout from '@/components/common/layout';
 import Head from 'next/head';
@@ -14,10 +13,10 @@ function Home({ categories }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Container>
+      <div className="screen-container">
         <div className={'header__offset__top'}></div>
 
-        <Row>
+        <div className="home">
           {categories.map(item => {
             return (
              <div className={'col-12 col-sm-4 col-md-3 mt-15'} key={`cat-item-${item.id}`}>
@@ -36,9 +35,9 @@ function Home({ categories }) {
              </div>
             )
           })}
-        </Row>
+        </div>
 
-      </Container>
+      </div>
     </>
   )
 }

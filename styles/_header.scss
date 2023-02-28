@@ -1,0 +1,36 @@
+@import "vars";
+
+.header__offset__top {
+  padding-top: 60px;
+}
+
+.header__navbar__main__section {
+  margin: 0;
+  padding: 10px 15px;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: #fafafa;
+}
+
+.header__navbar__main__section__container {
+  margin: 0 auto;
+  /*max-width: 1200px;*/
+  display: flex;
+  justify-content: space-between;
+}
+
+.header__navbar__main__section__descriptor {
+  display: none;
+  text-transform: uppercase;
+
+  @media screen and (min-width: $s-mob + 1 + px) {
+    display: block;
+  }
+}
+
+header {
+  display: block;
+  z-index: 900;
+}

@@ -5,27 +5,33 @@ export const Layout = ({ children }) => {
   return (
     <>
       <header className="header__navbar__main__section">
-        <div className="header__navbar__main__section__container">
-          <div>
-            <div className={'header__navbar__main__section__logo'}>
+        <div className="screen-container">
+          <div className="row">
+            <div className="col-12">
+              <div className="header__navbar__main__section__container">
+                <div>
+                  <div className="header__navbar__main__section__descriptor">
+                    Сеть магазинов боевой экипировки
+                  </div>
+                </div>
 
-            </div>
-          </div>
-
-          <div>
-            <div className={'header__navbar__main__section__phone'}>
-              <a href="tel:84959999999">+7 (495) 999 99 99</a>
+                <div>
+                  <div className={'header__navbar__main__section__phone'}>
+                    <a href="tel:84959999999">+7 (495) 999 99 99</a>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </header>
 
-      <main style={{ marginTop: '50px' }}>
+      <div id="main">
         {children}
-      </main>
+      </div>
 
       <footer>
-        <div className={'container'}>
+        <div className="screen-container">
           <div>&copy; Интернет-магазин &laquo;Военный стиль&raquo; 2023. Все права защищены. </div>
         </div>
       </footer>
