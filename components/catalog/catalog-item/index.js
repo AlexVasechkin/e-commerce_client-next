@@ -1,5 +1,6 @@
 import React from "react";
 import FastOrderModal from '@/components/common/fast-order-modal';
+import { NumericFormat } from 'react-number-format';
 
 
 const CatalogItem = ({
@@ -25,7 +26,11 @@ const CatalogItem = ({
     <div className="catalog__item__prices__row">
       <div className="catalog__item__prices__container">
       <div>
-        <div className="catalog__item__prices__price">{ `${ item.price }` } руб</div>
+        <div className="catalog__item__prices__price">
+          <NumericFormat value={ item.price }
+                         displayType={ 'text' }
+                         thousandSeparator=" " /> &#8381;
+        </div>
       </div>
       <div>
         <FastOrderModal
@@ -38,17 +43,17 @@ const CatalogItem = ({
     </div>
     <div className="catalog__item__deliveries__row">
       <div className="catalog__item__deliveries__container">
-      <div>
-        <div className="catalog__item__available"><i className="fa fa-circle" /> в наличии</div>
-      </div>
-      <div>
-        <div className="catalog__item__delivery-time">от 2-х дней</div>
-      </div>
+        <div>
+          <div className="catalog__item__available"><i className="fa fa-circle" /> в наличии</div>
+        </div>
+        <div>
+          <div className="catalog__item__delivery-time">от 2-х дней</div>
+        </div>
       </div>
     </div>
     <div className="catalog__item__name__row">
       <div className="catalog__item__name__container">
-      <div className="catalog__item__name">{ `${ item.name }` }</div>
+        <div className="catalog__item__name"><span className="catalog__item__name-category">{ `${ item.productCategory.nameSingle }` }</span><br />{ `${ item.name }` }</div>
       </div>
     </div>
   </div>;

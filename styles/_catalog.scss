@@ -66,6 +66,7 @@
 
 .catalog__item__prices__price {
   font-size: 18px;
+  font-family: $font-delius;
 }
 
 .catalog__item__deliveries__row {
@@ -92,4 +93,10 @@
   font-size: 20px;
   font-weight: 600;
   line-height: 1.0em;
+}
+
+.catalog__item__name-category {
+  font-weight: 400;
+  font-size: 14px;
+  color: $cLimedSpruce;
 }

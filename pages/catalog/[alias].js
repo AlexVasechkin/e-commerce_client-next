@@ -46,7 +46,8 @@ export const getServerSideProps = async ({ params }) => {
   const products = await axios
     .post(process.env.API_HOST + '/api/v1/public/products', {
       filters: {
-        categoryAlias: alias
+        categoryAlias: alias,
+        productPageActive: true
       }
     })
     .then(({ data }) => {
