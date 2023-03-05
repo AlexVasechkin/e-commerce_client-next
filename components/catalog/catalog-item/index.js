@@ -1,6 +1,10 @@
 import React from "react";
 import FastOrderModal from '@/components/common/fast-order-modal';
 import { NumericFormat } from 'react-number-format';
+import { Delius } from '@next/font/google';
+
+
+const fontDelius = Delius({weight: '400', subsets: ['latin']});
 
 
 const CatalogItem = ({
@@ -26,7 +30,7 @@ const CatalogItem = ({
     <div className="catalog__item__prices__row">
       <div className="catalog__item__prices__container">
       <div>
-        <div className="catalog__item__prices__price">
+        <div className={['catalog__item__prices__price', fontDelius.className].join(' ')}>
           <NumericFormat value={ item.price }
                          displayType={ 'text' }
                          thousandSeparator=" " /> &#8381;
