@@ -19,7 +19,7 @@ function Home({ categories }) {
         <div className="home">
           {categories.map(item => {
             return (
-             <div className={'col-12 col-sm-4 col-md-3 mt-15'} key={`cat-item-${item.id}`}>
+             <div className={'homepage__product-category__col'} key={`cat-item-${item.id}`}>
                <Link href={'/catalog/' + item.alias}>
                    <div className="homepage__product-category__container">
                      <div className="catalog__item__image__row">

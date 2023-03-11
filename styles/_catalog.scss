@@ -99,3 +99,19 @@
   font-size: 14px;
   color: $cLimedSpruce;
 }
+
+.catalog__item__group__row {
+  padding: 5px 15px 0;
+}
+
+.catalog__item__group__sticker-container {
+  display: inline-block;
+  margin: 5px 10px 0 0;
+}
+
+.catalog__item__group__sticker {
+  padding: 5px 8px;
+  border-radius: 4px;
+  background-color: royalblue;
+  color: $cWhite;
+}

@@ -12,7 +12,8 @@ const CatalogItem = ({
     id: 0,
     price: 0,
     images: [],
-    name: ''
+    name: '',
+    productGroups: []
   }
 }) => {
   const [firstImage = {}] = item.images;
@@ -26,6 +27,17 @@ const CatalogItem = ({
             src={ `${ path }` } alt={ description } />
         </div>
       </div>
+    </div>
+    <div className="catalog__item__group__row">
+      {
+        item.productGroups.map(item => {
+          return (
+            <div key={`pg-${item.id}`} className="catalog__item__group__sticker-container">
+              <div className="catalog__item__group__sticker">{`${ item.name }`}</div>
+            </div>
+          )
+        })
+      }
     </div>
     <div className="catalog__item__prices__row">
       <div className="catalog__item__prices__container">
@@ -57,7 +69,11 @@ const CatalogItem = ({
     </div>
     <div className="catalog__item__name__row">
       <div className="catalog__item__name__container">
-        <div className="catalog__item__name"><span className="catalog__item__name-category">{ `${ item.productCategory.nameSingle }` }</span><br />{ `${ item.name }` }</div>
+        <div className="catalog__item__name">
+          <span className="catalog__item__name-category">{ `${ item.productCategory.nameSingle }` }</span>
+          <br />
+          { `${ item.name }` }
+        </div>
       </div>
     </div>
   </div>;
