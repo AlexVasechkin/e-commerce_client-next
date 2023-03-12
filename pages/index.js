@@ -2,9 +2,10 @@ import Link from 'next/link';
 import axios from 'axios';
 import withLayout from '@/components/common/layout';
 import Head from 'next/head';
+import CatalogItem from '@/components/catalog/catalog-item';
 
 
-function Home({ categories }) {
+function Home({ categories, productGroups, productsByGroups }) {
   return (
     <>
       <Head>
@@ -35,6 +36,37 @@ function Home({ categories }) {
              </div>
             )
           })}
+
+          <div className="homepage__products-by-groups">
+          {
+            productGroups
+              .sort((a, b) => (a.homepageSort >= b.homepageSort))
+              .map(group => {
+              return (
+                <div className="homepage__products-by-groups__section">
+                  <h2 className="homepage__products-by-groups__title">{ `${ group.name }` }</h2>
+                  <hr/>
+                  <div>
+                    <div className="overflow-y__container">
+                      {
+                        productsByGroups
+                          .filter(el => Array.from(el.productGroups, ({id}) => id).includes(group.id))
+                          .map(product => {
+                            return (
+                              <div className="inline-container">
+                                <CatalogItem item={product} />
+                              </div>
+                            )
+                          })
+                      }
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+          }
+          </div>
+
         </div>
 
       </div>
@@ -51,7 +83,36 @@ export async function getServerSideProps() {
     })
   ;
 
-  return {props: { categories }};
+  const productGroups = await axios
+    .post(process.env.API_HOST + '/api/v1/public/product-group/list', {
+      isToHomepage: true
+    })
+    .then(({ data = {} }) => {
+      const { payload = [] } = data;
+      return payload;
+    })
+  ;
+
+  const productsByGroups = productGroups.length > 0
+    ? await axios
+        .post(process.env.API_HOST + '/api/v1/public/products', {
+          productGroupIdList: Array.from(productGroups, ({ id }) => id),
+          limit: 1000
+        })
+        .then(({ data = {} }) => {
+          const { payload = [] } = data;
+          return Array.isArray(payload) ? payload : [];
+        })
+    : []
+  ;
+
+  return {
+    props: {
+      categories,
+      productGroups,
+      productsByGroups
+    }
+  };
 }
 
 export default withLayout(Home);

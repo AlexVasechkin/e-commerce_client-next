@@ -20,8 +20,10 @@ const CatalogCategoryPage = ({ pageData, products }) => {
         </div>
 
         <div className="catalog__items">
-          {products.map(product => <CatalogItem  key={ `catalog-item-${ product.id }` }
-                                                 item={ product } />
+          {products.map(product => <div className="grid-container">
+              <CatalogItem  key={ `c-i-${ product.id }` }
+                            item={ product } />
+            </div>
           )}
         </div>
 

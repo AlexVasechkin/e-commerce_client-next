@@ -46,3 +46,44 @@ main {
     padding-top: 50px;
     min-height: 92vh;
 }
+
+.grid-container {
+    width: 100%;
+    display: block;
+    margin: 0;
+    padding: 0;
+
+    @media screen and (min-width: $s-mob + 1 + px) {
+        max-width: 50%;
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    @media screen and (min-width: $s-tab - 1 + px) {
+        max-width: 33.33333%;
+    }
+
+    @media screen and (min-width: $s-laptop + px) {
+        max-width: 25%;
+    }
+
+    @media screen and (min-width: $s-full-hd + px) {
+        max-width: 20%;
+    }
+}
+
+.inline-container {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    width: 260px;
+    vertical-align: top;
+}
+
+.overflow-y__container {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0 0 20px;
+    overflow-y: auto;
+}

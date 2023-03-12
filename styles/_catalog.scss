@@ -1,27 +1,7 @@
 @import "vars";
 
 .catalog__item__container {
-  width: 100%;
-  display: block;
-  margin: 0;
-  padding: 15px;
 
-  @media screen and (min-width: $s-mob + 1 + px) {
-    display: inline-block;
-    max-width: 50%;
-  }
-
-  @media screen and (min-width: $s-tab - 1 + px) {
-    max-width: 33.33333%;
-  }
-
-  @media screen and (min-width: $s-laptop + px) {
-    max-width: 25%;
-  }
-
-  @media screen and (min-width: $s-full-hd + px) {
-    max-width: 20%;
-  }
 }
 
 .catalog__item__image__row {

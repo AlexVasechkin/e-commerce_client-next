@@ -24,7 +24,7 @@ const CatalogItem = ({
   const [firstImage = {}] = item.images;
   const { path = '', description = '' } = firstImage;
 
-  return <div className="catalog__item__container">
+  return <div className="catalog__item">
     <div className="catalog__item__code__row">
       <div className="catalog__item__code__container">
         <div>
