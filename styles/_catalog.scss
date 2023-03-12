@@ -115,3 +115,20 @@
   background-color: royalblue;
   color: $cWhite;
 }
+
+.catalog__item__code__row {
+  margin: 0;
+  padding: 5px 15px 0;
+}
+
+.catalog__item__code__container {
+  display: flex;
+  justify-content: space-between;
+}
+
+ .catalog__item__code
+,.catalog__item__vendor {
+  font-size: 14px;
+  line-height: 1em;
+  color: $cLimedSpruce;
+}

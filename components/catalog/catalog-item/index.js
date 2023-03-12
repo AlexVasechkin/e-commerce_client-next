@@ -11,15 +11,34 @@ const CatalogItem = ({
   item = {
     id: 0,
     price: 0,
+    code: '',
     images: [],
     name: '',
-    productGroups: []
+    productGroups: [],
+    vendor: {
+      id: 0,
+      name: ''
+    }
   }
 }) => {
   const [firstImage = {}] = item.images;
   const { path = '', description = '' } = firstImage;
 
   return <div className="catalog__item__container">
+    <div className="catalog__item__code__row">
+      <div className="catalog__item__code__container">
+        <div>
+          <div>
+            <div className="catalog__item__vendor">{ `${ item.vendor.name ?? '' }` }</div>
+          </div>
+        </div>
+
+        <div>
+          <div className="catalog__item__code">{ `${ item.code }` }</div>
+        </div>
+
+      </div>
+    </div>
     <div className="catalog__item__image__row">
       <div className="catalog__item__image__container">
         <div className="catalog__item__image__substrate">
@@ -71,7 +90,7 @@ const CatalogItem = ({
         <div className="catalog__item__name">
           <span className="catalog__item__name-category">{ `${ item.productCategory.nameSingle }` }</span>
           <br />
-          { `${ item.name }` }
+          { [item.vendor.name ?? '', `${ item.name }`].join(' ').trim() }
         </div>
       </div>
     </div>
