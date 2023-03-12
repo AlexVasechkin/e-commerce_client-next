@@ -26,6 +26,8 @@ export const Layout = ({ children }) => {
         </div>
       </header>
 
+      <div className={'header__offset__top'}></div>
+
       <div id="main">
         {children}
       </div>

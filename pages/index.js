@@ -15,8 +15,6 @@ function Home({ categories, productGroups, productsByGroups }) {
       </Head>
 
       <div className="screen-container">
-        <div className={'header__offset__top'}></div>
-
         <div className="home">
           {categories.map(item => {
             return (
