@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import FastOrderModal from '@/components/common/fast-order-modal';
 import { NumericFormat } from 'react-number-format';
 import { Delius } from '@next/font/google';
@@ -18,7 +18,6 @@ const CatalogItem = ({
 }) => {
   const [firstImage = {}] = item.images;
   const { path = '', description = '' } = firstImage;
-  const { productGroups = [] } = item;
 
   return <div className="catalog__item__container">
     <div className="catalog__item__image__row">
@@ -30,8 +29,7 @@ const CatalogItem = ({
       </div>
     </div>
     <div className="catalog__item__group__row">
-      {
-        productGroups.map(item => {
+      { Array.isArray(item.productGroups) && item.productGroups.map(item => {
           return (
             <div key={`pg-${item.id}`} className="catalog__item__group__sticker-container">
               <div className="catalog__item__group__sticker">{`${ item.name }`}</div>
