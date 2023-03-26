@@ -41,7 +41,7 @@
 
 .homepage__products-by-groups {
   margin: 0;
-  padding: 30px 15px 0;
+  padding: 0 15px 0;
 }
 
 .homepage__products-by-groups__section {
@@ -50,4 +50,14 @@
 
 .homepage__products-by-groups__title {
   font-size: 34px;
+  text-transform: capitalize;
+}
+
+.homepage__categories__title {
+  padding: 15px;
+  font-size: 30px;
+}
+
+.homepage__categories__section {
+  padding-bottom: 15px;
 }

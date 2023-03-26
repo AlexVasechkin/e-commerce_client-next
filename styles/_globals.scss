@@ -43,7 +43,6 @@ main {
 }
 
 #main {
-    padding-top: 50px;
     min-height: 92vh;
 }
 
@@ -73,17 +72,18 @@ main {
 }
 
 .inline-container {
-    display: inline-block;
-    margin: 0;
-    padding: 0;
-    width: 260px;
-    vertical-align: top;
+    //display: flex;
+    flex: 0 0 260px;
+    scroll-snap-align: start;
 }
 
-.overflow-y__container {
-    display: block;
-    width: 100%;
+.overflow-x__container {
+    display: flex;
     margin: 0;
-    padding: 0 0 20px;
-    overflow-y: auto;
+    padding: 0 0 20px 0;
+    justify-content: start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: auto;
+    scroll-snap-type: x mandatory;
 }

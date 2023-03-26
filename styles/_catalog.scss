@@ -113,10 +113,23 @@
   color: $cLimedSpruce;
 }
 
-.catalog__search-form {
-
-}
-
 .catalog {
   margin-top: 45px;
+}
+
+.catalog__products-by-groups {
+  margin: 0;
+  padding: 0 15px 0;
+}
+
+.catalog__item-vendor-name {
+  text-transform: capitalize;
+}
+
+.catalog__search-form__section {
+  padding: 30px 0;
+}
+
+.catalog__items {
+  padding-bottom: 15px;
 }

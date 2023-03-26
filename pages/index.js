@@ -16,25 +16,6 @@ function Home({ categories, productGroups, productsByGroups }) {
 
       <div className="screen-container">
         <div className="home">
-          {categories.map(item => {
-            return (
-             <div className={'homepage__product-category__col'} key={`cat-item-${item.id}`}>
-               <Link href={'/catalog/' + item.alias}>
-                   <div className="homepage__product-category__container">
-                     <div className="catalog__item__image__row">
-                       <div className="catalog__item__image__container">
-                         <div className="catalog__item__image__substrate">
-                           <img className="catalog__item__image"
-                                src={ `${ item.picture }` } alt={ '' } />
-                         </div>
-                       </div>
-                     </div>
-                   </div>
-               </Link>
-             </div>
-            )
-          })}
-
           <div className="homepage__products-by-groups">
           {
             productGroups
@@ -45,7 +26,7 @@ function Home({ categories, productGroups, productsByGroups }) {
                   <h2 className="homepage__products-by-groups__title">{ `${ group.name }` }</h2>
                   <hr/>
                   <div>
-                    <div className="overflow-y__container">
+                    <div className="overflow-x__container">
                       {
                         productsByGroups
                           .filter(el => Array.from(el.productGroups, ({id}) => id).includes(group.id))
@@ -64,6 +45,32 @@ function Home({ categories, productGroups, productsByGroups }) {
             })
           }
           </div>
+
+          <div className="homepage__categories__section">
+            <h2 className="homepage__categories__title">Категории товаров</h2>
+
+            {
+              categories.map(item => {
+                return (
+                  <div className={'homepage__product-category__col'} key={`cat-item-${item.id}`}>
+                    <Link href={'/catalog/' + item.alias}>
+                      <div className="homepage__product-category__container">
+                        <div className="catalog__item__image__row">
+                          <div className="catalog__item__image__container">
+                            <div className="catalog__item__image__substrate">
+                              <img className="catalog__item__image"
+                                   src={ `${ item.picture }` } alt={ '' } />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
+                )
+              })
+            }
+          </div>
+
 
         </div>
 

@@ -90,7 +90,7 @@ const CatalogItem = ({
         <div className="catalog__item__name">
           <span className="catalog__item__name-category">{ `${ item.productCategory.nameSingle }` }</span>
           <br />
-          { [item.vendor.name ?? '', `${ item.name }`].join(' ').trim() }
+          <span className="catalog__item-vendor-name">{ `${ item.vendor.name ?? '' }` }</span> {`${ item.name ?? '' }`}
         </div>
       </div>
     </div>
