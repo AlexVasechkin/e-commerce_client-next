@@ -1,34 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import withLayout from '@/components/common/layout';
-import axios from 'axios';
+import axios, {patch} from 'axios';
 import CatalogItem from '@/components/catalog/catalog-item';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 
-const CatalogCategoryPage = ({ pageData, products, qp }) => {
+const CatalogCategoryPage = ({ pageData, products, qp, groups, productsByGroups }) => {
 
   const router = useRouter();
 
   const { searchString = '' } = qp;
   const [_searchString, setSearchString] = useState(searchString);
-  const [groups, setGroups] = useState([]);
-  const [productsByGroups, setProductByGroups] = useState([]);
-
-  useEffect(() => {
-    axios
-      .post(`/api/products-by-groups-for-category/${ pageData.id }`)
-      .then(({ data = {} }) => {
-        const {
-          groups = [],
-          products = []
-        } = data;
-
-        setGroups(groups);
-        setProductByGroups(products);
-
-      })
-  }, []);
 
   const onSearchFormSubmit = e => {
     e.preventDefault();
@@ -177,6 +160,21 @@ export const getServerSideProps = async ({ params, query }) => {
       return payload;
     });
 
+  const { productsByGroups = [], groups = [] } = await axios
+    .get(`${ process.env.API_HOST }/api/v1/public/category-products-by-groups/${ pageData.id }`)
+    .then(({ data = {} }) => {
+      const {
+        payload = {}
+      } = data;
+
+      const { products = [], groups = [] } = payload;
+
+      return {
+        productsByGroups: products,
+        groups
+      }
+    })
+
   if (search_string.length > 0) {
     queryParams.searchString = search_string;
   }
@@ -185,7 +183,9 @@ export const getServerSideProps = async ({ params, query }) => {
     props: {
       pageData,
       products,
-      qp: queryParams
+      qp: queryParams,
+      productsByGroups,
+      groups
     }
   }
 };

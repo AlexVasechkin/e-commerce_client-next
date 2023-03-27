@@ -1,7 +1,10 @@
 import React, {useState} from 'react';
 import axios from 'axios';
-import { FormGroup } from 'react-bootstrap';
 import CountSwitcher from '@/components/common/count-switcher';
+import { NumericFormat } from 'react-number-format';
+import {Delius} from '@next/font/google';
+
+const fontDelius = Delius({weight: '400', subsets: ['latin']});
 
 
 export const FastOrderForm = ({
@@ -10,7 +13,6 @@ export const FastOrderForm = ({
 }) => {
 
   const [isAwait, setIsAwait] = useState(false);
-  const [isCompleted, setIsCompleted] = useState(false);
 
   const [name, setName] = useState('');
   const [count, setCount] = useState(1);
@@ -42,11 +44,19 @@ export const FastOrderForm = ({
       <div style={ { display: 'flex', justifyContent: 'space-between', alignItems: 'center' } } >
         <div>
           <div className="small text-grey">за шт.</div>
-          <div>{ `${ item.price } р.` }</div>
+          <div className={ fontDelius.className }>
+            <NumericFormat value={ item.price }
+                           displayType={ 'text' }
+                           thousandSeparator=" " /> &#8381;
+          </div>
         </div>
         <div>
           <div className="small text-grey">на сумму</div>
-          <div>{ `${ item.price * count } р.` }</div>
+          <div className={ fontDelius.className }>
+            <NumericFormat value={ item.price * count }
+                           displayType={ 'text' }
+                           thousandSeparator=" " /> &#8381;
+          </div>
         </div>
         <div>
           <CountSwitcher value={ count }
@@ -88,7 +98,11 @@ export const FastOrderForm = ({
     </div>
 
     <div className="form-group">
-      <div className="text-right"><button className="btn btn-outline-success" type="submit">Заказать</button></div>
+      <div className="text-right">
+        <button className="btn btn-outline-success"
+                type="submit"
+        >Заказать</button>
+      </div>
     </div>
 
   </form>;
