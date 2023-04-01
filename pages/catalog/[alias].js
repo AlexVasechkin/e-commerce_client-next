@@ -167,7 +167,7 @@ export const getServerSideProps = async ({ params, query }) => {
     });
 
   const { productsByGroups = [], groups = [] } = await axios
-    .get(`${ process.env.API_HOST }/api/v1/public/category-products-by-groups/${ pageData.id }`)
+    .get(`${ process.env.API_HOST }/api/v1/public/category-products-by-groups/${ pageData.productCategoryId }`)
     .then(({ data = {} }) => {
       const {
         payload = {}
