@@ -1,17 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import withLayout from '@/components/common/layout';
-import axios, {patch} from 'axios';
+import axios from 'axios';
 import CatalogItem from '@/components/catalog/catalog-item';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 
-const CatalogCategoryPage = ({ pageData, products, qp, groups, productsByGroups }) => {
+const CatalogCategoryPage = ({
+  pageData,
+  products,
+  qp,
+  groups,
+  productsByGroups
+}) => {
 
   const router = useRouter();
 
   const { searchString = '' } = qp;
   const [_searchString, setSearchString] = useState(searchString);
+
+  console.log(groups);
+  console.log(productsByGroups);
 
   const onSearchFormSubmit = e => {
     e.preventDefault();
@@ -168,6 +177,9 @@ export const getServerSideProps = async ({ params, query }) => {
       } = data;
 
       const { products = [], groups = [] } = payload;
+
+      console.log(products);
+      console.log(groups);
 
       return {
         productsByGroups: products,
