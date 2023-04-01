@@ -11,18 +11,13 @@ const CatalogCategoryPage = ({
   products,
   qp,
   groups,
-  productsByGroups,
-  productsUrl
+  productsByGroups
 }) => {
 
-  console.log(productsUrl);
   const router = useRouter();
 
   const { searchString = '' } = qp;
   const [_searchString, setSearchString] = useState(searchString);
-
-  console.log(groups);
-  console.log(productsByGroups);
 
   const onSearchFormSubmit = e => {
     e.preventDefault();
@@ -180,9 +175,6 @@ export const getServerSideProps = async ({ params, query }) => {
 
       const { products = [], groups = [] } = payload;
 
-      console.log(products);
-      console.log(groups);
-
       return {
         productsByGroups: products,
         groups
@@ -193,16 +185,13 @@ export const getServerSideProps = async ({ params, query }) => {
     queryParams.searchString = search_string;
   }
 
-  const productsUrl = `${ process.env.API_HOST }/api/v1/public/category-products-by-groups/${ pageData.id }`;
-
   return {
     props: {
       pageData,
       products,
       qp: queryParams,
       productsByGroups,
-      groups,
-      productsUrl
+      groups
     }
   }
 };
