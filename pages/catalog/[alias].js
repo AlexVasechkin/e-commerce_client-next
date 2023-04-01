@@ -11,9 +11,11 @@ const CatalogCategoryPage = ({
   products,
   qp,
   groups,
-  productsByGroups
+  productsByGroups,
+  productsUrl
 }) => {
 
+  console.log(productsUrl);
   const router = useRouter();
 
   const { searchString = '' } = qp;
@@ -191,13 +193,16 @@ export const getServerSideProps = async ({ params, query }) => {
     queryParams.searchString = search_string;
   }
 
+  const productsUrl = `${ process.env.API_HOST }/api/v1/public/category-products-by-groups/${ pageData.id }`;
+
   return {
     props: {
       pageData,
       products,
       qp: queryParams,
       productsByGroups,
-      groups
+      groups,
+      productsUrl
     }
   }
 };
