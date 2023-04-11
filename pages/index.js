@@ -3,9 +3,92 @@ import axios from 'axios';
 import withLayout from '@/components/common/layout';
 import Head from 'next/head';
 import CatalogItem from '@/components/catalog/catalog-item';
+import {useMemo} from 'react';
+import {Tabs, Tab} from 'react-bootstrap';
 
 
-function Home({ categories, productGroups, productsByGroups }) {
+function Home({
+  categories,
+  productGroups,
+  productsByGroups
+}) {
+
+  const productsForTabs = useMemo(() => {
+
+    let r = {};
+
+    productsByGroups.forEach(item => {
+      for (let i = 0; i < item.productGroups.length; i++) {
+
+        if (typeof r[item.productGroups[i].id] !== 'object') {
+          r[item.productGroups[i].id] = {};
+        }
+
+        if (typeof r[item.productGroups[i].id][item.productCategory.id] === 'undefined') {
+          r[item.productGroups[i].id][item.productCategory.id] = [];
+        }
+
+        r[item.productGroups[i].id][item.productCategory.id].push(item);
+      }
+    });
+
+    return r;
+
+  }, []);
+
+
+  const renderTabsWithProducts = groupProducts => {
+
+    const categoryIdList = [];
+
+    for (const [key] of Object.entries(groupProducts)) {
+      categoryIdList.push(key);
+    }
+
+    const defaultActiveKey = categoryIdList[0] ?? null;
+
+    const tabs = categoryIdList.map(categoryId => {
+
+      const categoryIdx = categories.findIndex(el => el.categoryId == categoryId);
+
+      return (
+        <Tab key={ categoryId }
+             eventKey={ categoryId }
+             title={ `${ categories[categoryIdx].name }` }>
+          <div className="overflow-x__container">
+            {
+              groupProducts[categoryId]
+                .map(product => {
+                  return (
+                    <div key={ product.id } className="inline-container">
+                      <CatalogItem item={product} />
+                    </div>
+                  )
+                })
+            }
+          </div>
+        </Tab>
+      );
+    });
+
+    return [defaultActiveKey, tabs]
+  };
+
+
+  const renderProductsByTabs = groupId => {
+
+    const groupProducts = productsForTabs[groupId] ?? [];
+
+    const [defaultActiveKey, tabs] = renderTabsWithProducts(groupProducts);
+
+    return (
+      <Tabs defaultActiveKey={ defaultActiveKey } id={ `group-tabs-${ groupId }` }>
+        { tabs }
+      </Tabs>
+    )
+  };
+
+
   return (
     <>
       <Head>
@@ -24,22 +107,11 @@ function Home({ categories, productGroups, productsByGroups }) {
               return (
                 <div className="homepage__products-by-groups__section">
                   <h2 className="homepage__products-by-groups__title">{ `${ group.name }` }</h2>
-                  <hr/>
-                  <div>
-                    <div className="overflow-x__container">
-                      {
-                        productsByGroups
-                          .filter(el => Array.from(el.productGroups, ({id}) => id).includes(group.id))
-                          .map(product => {
-                            return (
-                              <div className="inline-container">
-                                <CatalogItem item={product} />
-                              </div>
-                            )
-                          })
-                      }
-                    </div>
-                  </div>
+
+                  <div style={ { paddingTop: '15px' } }></div>
+
+                  { renderProductsByTabs(group.id) }
+
                 </div>
               );
             })
@@ -59,7 +131,9 @@ function Home({ categories, productGroups, productsByGroups }) {
                           <div className="catalog__item__image__container">
                             <div className="catalog__item__image__substrate">
                               <img className="catalog__item__image"
-                                   src={ `${ item.picture }` } alt={ '' } />
+                                   src={ `${ item.picture }` }
+                                   alt={ '' }
+                              />
                             </div>
                           </div>
                         </div>

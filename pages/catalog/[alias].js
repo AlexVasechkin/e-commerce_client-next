@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useMemo, useState} from 'react';
 import withLayout from '@/components/common/layout';
 import axios from 'axios';
 import CatalogItem from '@/components/catalog/catalog-item';
@@ -14,7 +14,7 @@ const CatalogCategoryPage = ({
   productsByGroups
 }) => {
 
-  const router = useRouter();
+  const router = useMemo(() => useRouter(), []);
 
   const { searchString = '' } = qp;
   const [_searchString, setSearchString] = useState(searchString);
@@ -108,9 +108,9 @@ const CatalogCategoryPage = ({
           </div>
 
           <div className="catalog__items">
-            {products.map(product => <div className="grid-container">
-                <CatalogItem key={ `c-i-${ product.id }` }
-                             item={ product } />
+            {products.map(product => <div key={ `c-i-${ product.id }` }
+                                          className="grid-container">
+                <CatalogItem item={ product } />
               </div>
             )}
           </div>
