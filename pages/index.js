@@ -51,6 +51,10 @@ function Home({
 
       const categoryIdx = categories.findIndex(el => el.categoryId == categoryId);
 
+      if (categoryIdx === -1) {
+        return null;
+      }
+
       return (
         <Tab key={ categoryId }
              eventKey={ categoryId }
@@ -83,7 +87,7 @@ function Home({
 
     return (
       <Tabs defaultActiveKey={ defaultActiveKey } id={ `group-tabs-${ groupId }` }>
-        { tabs }
+        { tabs.filter(el => el !== null) }
       </Tabs>
     )
   };
