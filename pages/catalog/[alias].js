@@ -4,6 +4,8 @@ import axios from 'axios';
 import CatalogItem from '@/components/catalog/catalog-item';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import PageNavigator from '@/components/common/page-navigator';
+import {ucFirst} from '@/components/utils/func';
 
 
 const CatalogCategoryPage = ({
@@ -16,26 +18,111 @@ const CatalogCategoryPage = ({
 
   const router = useMemo(() => useRouter(), []);
 
-  const { searchString = '' } = qp;
-  const [_searchString, setSearchString] = useState(searchString);
+  const baseUrl = useMemo(() => {
+    const [base = '/'] = router.asPath.split('?');
+    return base;
+  }, []);
 
-  const onSearchFormSubmit = e => {
-    e.preventDefault();
+
+  const [_searchString, setSearchString] = useState(qp.searchString);
+
+
+  const createUrl = (base, queryParams) => {
 
     const paramsValues = [];
+
+    for (let key in queryParams) {
+      paramsValues.push(`${ key }=${ queryParams[key] }`);
+    }
+
+    return base + '?' + paramsValues.join('&')
+  };
+
+
+  const generateUrl = (params) => {
+
+    const queryParams = {};
+
     for (let key in qp) {
       if (!['searchString', 'page'].includes(key)) {
-        paramsValues.push(`${ key }=${ qp[key] }`);
+        queryParams[key] = qp[key];
       }
     }
 
-    if (_searchString.length > 0) {
-      paramsValues.push(`search_string=${ _searchString }`);
+    if ((typeof params.page === 'number') && params.page > 1) {
+      queryParams.page = params.page;
     }
 
-    const [base = '/'] = router.asPath.split('?');
+    if ((typeof params.searchString === 'string') && (params.searchString.length > 0)) {
+      queryParams.search_string = params.searchString;
+    }
 
-    router.push(base + '?' + paramsValues.join('&'));
+    return createUrl(baseUrl, queryParams);
+  };
+
+
+  const onSearchFormSubmit = e => {
+
+    e.preventDefault();
+
+    router.push(generateUrl({
+      searchString: _searchString,
+      page: qp.page
+    }));
+  }
+
+
+  const Navigator = () => {
+    return (
+      <PageNavigator currentPage={ products.currentPage }
+                     totalPageCount={ products.totalPageCount }
+                     firstPageUrl={ qp.page < 2 ? null : generateUrl({ searchString: _searchString, page: 1 }) }
+                     onFirstPageClick={ () => null }
+                     prevPageUrl={ qp.page - 1 < 1 ? null : generateUrl({ searchString: _searchString, page: qp.page - 1 }) }
+                     onPrevPageClick={ () => null }
+                     nextPageUrl={ qp.page + 1 > products.totalPageCount ? null : generateUrl({ searchString: _searchString, page: qp.page + 1 }) }
+                     onNextPageClick={ () => null }
+                     lastPageUrl={ qp.page >= products.totalPageCount ? null : generateUrl({ searchString: _searchString, page: products.totalPageCount }) }
+                     onLastPageClick={ () => null }
+      />
+    )
+  }
+
+
+  const productsByGroupsBlock = () => {
+    return (
+      <div className="catalog__products-by-groups">
+        {
+          groups
+            .sort((a, b) => (a.sortOrder >= b.sortOrder))
+            .map(group => {
+              return (
+                <div className="homepage__products-by-groups__section" key={ `c-g-${ group.id }` }>
+                  <div className="section-headline__container">
+                    <h2 className="section-headline">{ ucFirst(`${ group.name }`) }</h2>
+                  </div>
+
+                  <div>
+                    <div className="overflow-x__container">
+                      {
+                        productsByGroups
+                          .filter(el => Array.from(el.productGroups, ({id}) => id).includes(group.id))
+                          .map(product => {
+                            return (
+                              <div className="inline-container" key={ `c-i-${ product.id }` }>
+                                <CatalogItem item={product} />
+                              </div>
+                            )
+                          })
+                      }
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+        }
+      </div>
+    )
   }
 
   return (
@@ -47,73 +134,73 @@ const CatalogCategoryPage = ({
 
       <div className="catalog">
         <div className="screen-container">
+
+          <div className={ 'catalog__nav-container' }>
+            <nav>
+              <ol className="breadcrumb">
+                <li className="breadcrumb-item"><a href="/" title={ 'на главную' }>Главная</a></li>
+                <li className="breadcrumb-item active" aria-current="page">{ ucFirst(`${ pageData.pagetitle ?? '' }`) }</li>
+              </ol>
+            </nav>
+          </div>
+
           <div className="page-headline-row">
-            <h1>{`${ pageData.headline }`}</h1>
-            <hr/>
-          </div>
-
-          <div className="catalog__products-by-groups">
-            {
-              groups
-                .sort((a, b) => (a.sortOrder >= b.sortOrder))
-                .map(group => {
-                  return (
-                    <div className="homepage__products-by-groups__section" key={ `c-g-${ group.id }` }>
-                      <h2 className="homepage__products-by-groups__title">{ `${ group.name }` }</h2>
-                      <hr/>
-                      <div>
-                        <div className="overflow-x__container">
-                          {
-                            productsByGroups
-                              .filter(el => Array.from(el.productGroups, ({id}) => id).includes(group.id))
-                              .map(product => {
-                                return (
-                                  <div className="inline-container" key={ `c-i-${ product.id }` }>
-                                    <CatalogItem item={product} />
-                                  </div>
-                                )
-                              })
-                          }
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })
-            }
-          </div>
-
-          <hr/>
-
-          <h2 className="homepage__products-by-groups__title">{ `Все ${ pageData.headline }` }</h2>
-
-          <div className="catalog__search-form__section">
-            <div className="catalog__search-form">
-              <div className="screen-container">
-                <form method={'GET'}
-                      onSubmit={ onSearchFormSubmit }
-                      className="input-group">
-                  <input type="form-control"
-                         name="search_string"
-                         value={ _searchString }
-                         onChange={ e => setSearchString(e.target.value) }
-                  />
-                  <div className="input-group-append">
-                    <button type="submit"
-                            className="btn btn-outline-primary"
-                    >Найти</button>
-                  </div>
-                </form>
-              </div>
+            <div className={'main-headline__container'}>
+              <h1 className={ 'main-headline' }>{ ucFirst(`${ pageData.headline }`) }</h1>
             </div>
           </div>
 
-          <div className="catalog__items">
-            {products.map(product => <div key={ `c-i-${ product.id }` }
-                                          className="grid-container">
-                <CatalogItem item={ product } />
+          {
+            qp.page === 1 && qp.searchString.length === 0 && productsByGroupsBlock()
+          }
+
+          <div className={ 'catalog__all-products' }>
+            <div className={ 'section-headline__container' }>
+              <h2 className="section-headline">{ `Все ${ pageData.headline ?? '' }` }</h2>
+            </div>
+
+            <div className="catalog__search-form__section">
+              <div className="catalog__search-form">
+                <div className="screen-container">
+                  <form method={'GET'}
+                        onSubmit={ onSearchFormSubmit }
+                        className="input-group">
+                    <input type="form-control"
+                           name="search_string"
+                           value={ _searchString }
+                           onChange={ e => setSearchString(e.target.value) }
+                    />
+                    <div className="input-group-append">
+                      <button type="submit"
+                              className="btn btn-outline-primary"
+                      >Найти</button>
+                    </div>
+                  </form>
+                </div>
               </div>
-            )}
+            </div>
+
+            <div className={ 'catalog__page-navigator text-center' }>
+              <Navigator />
+            </div>
+
+            <div className="catalog__items">
+              {products.payload.map(product => <div key={ `c-i-${ product.id }` }
+                                                    className="grid-container">
+                  <CatalogItem item={ product } />
+                </div>
+              )}
+
+            </div>
+
+            <div className={ 'catalog__page-navigator text-center' }>
+              <Navigator />
+            </div>
           </div>
+
+          {
+            ((qp.page > 1) || (qp.searchString.length > 0)) && productsByGroupsBlock()
+          }
 
         </div>
       </div>
@@ -129,7 +216,10 @@ export const getServerSideProps = async ({ params, query }) => {
     search_string = ''
   } = query;
 
-  const queryParams = {};
+  const queryParams = {
+    page: 1,
+    searchString: ''
+  };
 
   let qPage = null;
   try {
@@ -162,8 +252,7 @@ export const getServerSideProps = async ({ params, query }) => {
       currentPage: queryParams.page
     })
     .then(({ data }) => {
-      const { payload = null } = data;
-      return payload;
+      return data;
     });
 
   const { productsByGroups = [], groups = [] } = await axios

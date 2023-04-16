@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import axios from 'axios';
 import CountSwitcher from '@/components/common/count-switcher';
 import { NumericFormat } from 'react-number-format';
 import {Delius} from '@next/font/google';
@@ -25,7 +24,7 @@ export const FastOrderForm = ({
 
   const getForm = () => <form onSubmit={ onSubmit }>
     <p className="h4">{ 'Вы заказываете:' }</p>
-    <p className="h3">{ `${ item.name }` }</p>
+    <p className="h3">{ `${ [item?.vendor.name ?? '', item.name ?? ''].join(' ').trim() }` }</p>
 
     <div className="form-group">
       <div className="row">

@@ -5,6 +5,7 @@ import Head from 'next/head';
 import CatalogItem from '@/components/catalog/catalog-item';
 import {useMemo} from 'react';
 import {Tabs, Tab} from 'react-bootstrap';
+import { ucFirst } from '@/components/utils/func';
 
 
 function Home({
@@ -58,7 +59,7 @@ function Home({
       return (
         <Tab key={ categoryId }
              eventKey={ categoryId }
-             title={ `${ categories[categoryIdx].name }` }>
+             title={ ucFirst(`${ categories[categoryIdx].name }`) }>
           <div className="overflow-x__container">
             {
               groupProducts[categoryId]
@@ -110,7 +111,9 @@ function Home({
               .map(group => {
               return (
                 <div className="homepage__products-by-groups__section">
-                  <h2 className="homepage__products-by-groups__title">{ `${ group.name }` }</h2>
+                  <div className={ 'section-headline__container' }>
+                    <h2 className="section-headline">{ ucFirst(`${ group.name ?? '' }`) }</h2>
+                  </div>
 
                   <div style={ { paddingTop: '15px' } }></div>
 

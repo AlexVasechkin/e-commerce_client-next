@@ -87,3 +87,19 @@ main {
     width: auto;
     scroll-snap-type: x mandatory;
 }
+
+.main-headline {
+    font-size: 28px;
+}
+
+.main-headline__container {
+    padding-top: 25px;
+}
+
+.section-headline {
+    font-size: 24px;
+}
+
+.section-headline__container {
+    padding: 15px 0;
+}
