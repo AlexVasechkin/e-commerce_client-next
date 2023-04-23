@@ -7,9 +7,9 @@ const CountSwitcher = ({
   inc
 }) => {
   return <div className="btn-group">
-    <button className="btn btn-outline-secondary" onClick={ dec }>-</button>
-    <button className="btn btn-outline-secondary disabled" disabled={ true }>{ value }</button>
-    <button className="btn btn-outline-secondary" onClick={ inc }>+</button>
+    <button type={ 'button' } className="btn btn-outline-secondary" onClick={ dec }>-</button>
+    <button type={ 'button' } className="btn btn-outline-secondary disabled" disabled>{ value }</button>
+    <button type={ 'button' } className="btn btn-outline-secondary" onClick={ inc }>+</button>
   </div>
 };
 

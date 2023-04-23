@@ -6,12 +6,19 @@ import {FastOrderForm} from '@/components/common/fast-order-modal/fast-order-for
 const FastOrderModal = ({
   getInitComponents = show => null,
   item,
-  onSuccess = () => null
+  onSuccess
 }) => {
   const [visible, setVisible] = useState(false);
 
   const close = () => setVisible(false);
   const show = () => setVisible(true);
+
+  const handleSuccess = orderId => {
+    onSuccess({
+      orderId,
+      close
+    });
+  };
 
   return <>
     { getInitComponents(show) }
@@ -21,7 +28,7 @@ const FastOrderModal = ({
         <Modal.Title>Оформление заказа</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <FastOrderForm item={ item } onSuccess={ onSuccess } />
+        <FastOrderForm item={ item } onSuccess={ handleSuccess } />
       </Modal.Body>
     </Modal>
   </>;
