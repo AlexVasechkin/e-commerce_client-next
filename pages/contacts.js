@@ -17,25 +17,21 @@ const ContactsPage = () => {
 
       <InnerPage breadcrumbs={[{url: '', caption: 'Контакты'}]}
                  headline={'Контакты'}>
-
-      </InnerPage>
-      <div className="contacts-page">
-
-
-        <div className={'text-page_container'}>
-          <p>Сеть магазинов &laquo;Военный стиль&raquo; (Милитари лайфстайл)</p>
-          <br/>
-          <p>
-            Самовывоз: Московская область, городской округ Мытищи, пос. Нагорное, <a href="https://yandex.ru/maps/-/CCUDbAagHA" title="Липкинское шоссе, дом 7">Липкинское шоссе, дом 7</a><br/>
+        <div className="contacts-page">
+          <div className={'text-page_container'}>
+            <p>Сеть магазинов &laquo;Военный стиль&raquo; (Милитари лайфстайл)</p>
             <br/>
-            Телефон: <a href={`tel:${ globalSettings.phone.value }`}>{ `${ globalSettings.phone.caption }` }</a><br/>
-            <br/>
-            ИП Васечкин Александр Валерьевич<br/>
-            ИНН 771552569722
-          </p>
+            <p>
+              Самовывоз: Московская область, городской округ Мытищи, пос. Нагорное, <a href="https://yandex.ru/maps/-/CCUDbAagHA" title="Липкинское шоссе, дом 7">Липкинское шоссе, дом 7</a><br/>
+              <br/>
+              Телефон: <a href={`tel:${ globalSettings.phone.value }`}>{ `${ globalSettings.phone.caption }` }</a><br/>
+              <br/>
+              ИП Васечкин Александр Валерьевич<br/>
+              ИНН 771552569722
+            </p>
+          </div>
         </div>
-
-      </div>
+      </InnerPage>
     </>
   )
 }
