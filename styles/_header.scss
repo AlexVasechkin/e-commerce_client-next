@@ -34,3 +34,23 @@ header {
   display: block;
   z-index: 900;
 }
+
+.main-navigation__container {
+  display: block;
+
+  @media screen and (min-width: $s-mob + 1 + px) {
+    padding: 0 8px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.main-navigation__item {
+  padding: 7px;
+}
+
+.main-navigation__item-link {
+  color: #001a34;
+}
+
+

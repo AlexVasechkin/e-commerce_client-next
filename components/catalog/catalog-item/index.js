@@ -23,7 +23,7 @@ const CatalogItem = ({
 }) => {
   const [firstImage = {}] = item.images;
   const { path = '', description = '' } = firstImage;
-  const router = useMemo(() => useRouter(), []);
+  const router = useRouter();
 
   return <div className="catalog__item">
     <div className="catalog__item__code__row">

@@ -93,7 +93,7 @@ main {
 }
 
 .main-headline__container {
-    padding-top: 25px;
+    padding-top: 20px;
 }
 
 .section-headline {
@@ -102,4 +102,17 @@ main {
 
 .section-headline__container {
     padding: 15px 0;
+}
+
+.text-page_container {
+    padding: 15px;
+}
+
+.breadcrumb {
+    padding: 0;
+    background-color: transparent;
+}
+
+.breadcrumb__container {
+    padding-top: 10px;
 }

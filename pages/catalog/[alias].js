@@ -6,6 +6,8 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import PageNavigator from '@/components/common/page-navigator';
 import {ucFirst} from '@/components/utils/func';
+import Breadcrumbs from "@/components/common/breadcrumbs";
+import InnerPage from "@/components/common/inner-page";
 
 
 const CatalogCategoryPage = ({
@@ -132,24 +134,10 @@ const CatalogCategoryPage = ({
         <meta name="description" content={ `${pageData.description ?? ''}` } />
       </Head>
 
-      <div className="catalog">
-        <div className="screen-container">
-
-          <div className={ 'catalog__nav-container' }>
-            <nav>
-              <ol className="breadcrumb">
-                <li className="breadcrumb-item"><a href="/" title={ 'на главную' }>Главная</a></li>
-                <li className="breadcrumb-item active" aria-current="page">{ ucFirst(`${ pageData.pagetitle ?? '' }`) }</li>
-              </ol>
-            </nav>
-          </div>
-
-          <div className="page-headline-row">
-            <div className={'main-headline__container'}>
-              <h1 className={ 'main-headline' }>{ ucFirst(`${ pageData.headline }`) }</h1>
-            </div>
-          </div>
-
+      <InnerPage headline={ucFirst(`${ pageData.headline }`)}
+                 breadcrumbs={[{url: '', caption: ucFirst(`${ pageData.pagetitle ?? '' }`)}]}
+      >
+        <div className="catalog">
           {
             qp.page === 1 && qp.searchString.length === 0 && productsByGroupsBlock()
           }
@@ -201,9 +189,8 @@ const CatalogCategoryPage = ({
           {
             ((qp.page > 1) || (qp.searchString.length > 0)) && productsByGroupsBlock()
           }
-
         </div>
-      </div>
+      </InnerPage>
     </>
   )
 };

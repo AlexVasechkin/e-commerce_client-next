@@ -102,58 +102,54 @@ function Home({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="screen-container">
-        <div className="home">
-          <div className="homepage__products-by-groups">
-          {
-            productGroups
-              .sort((a, b) => (a.homepageSort >= b.homepageSort))
-              .map(group => {
-              return (
-                <div className="homepage__products-by-groups__section">
-                  <div className={ 'section-headline__container' }>
-                    <h2 className="section-headline">{ ucFirst(`${ group.name ?? '' }`) }</h2>
-                  </div>
-
-                  <div style={ { paddingTop: '15px' } }></div>
-
-                  { renderProductsByTabs(group.id) }
-
+      <div className="home">
+        <div className="homepage__products-by-groups">
+        {
+          productGroups
+            .sort((a, b) => (a.homepageSort >= b.homepageSort))
+            .map(group => {
+            return (
+              <div className="homepage__products-by-groups__section">
+                <div className={ 'section-headline__container' }>
+                  <h2 className="section-headline">{ ucFirst(`${ group.name ?? '' }`) }</h2>
                 </div>
-              );
-            })
-          }
-          </div>
 
-          <div className="homepage__categories__section">
-            <h2 className="homepage__categories__title">Категории товаров</h2>
+                <div style={ { paddingTop: '15px' } }></div>
 
-            {
-              categories.map(item => {
-                return (
-                  <div className={'homepage__product-category__col'} key={`cat-item-${item.id}`}>
-                    <Link href={'/catalog/' + item.alias}>
-                      <div className="homepage__product-category__container">
-                        <div className="catalog__item__image__row">
-                          <div className="catalog__item__image__container">
-                            <div className="catalog__item__image__substrate">
-                              <img className="catalog__item__image"
-                                   src={ `${ item.picture }` }
-                                   alt={ '' }
-                              />
-                            </div>
+                { renderProductsByTabs(group.id) }
+
+              </div>
+            );
+          })
+        }
+        </div>
+
+        <div className="homepage__categories__section">
+          <h2 className="homepage__categories__title">Категории товаров</h2>
+          {
+            categories.map(item => {
+              return (
+                <div className={'homepage__product-category__col'} key={`cat-item-${item.id}`}>
+                  <Link href={'/catalog/' + item.alias}>
+                    <div className="homepage__product-category__container">
+                      <div className="catalog__item__image__row">
+                        <div className="catalog__item__image__container">
+                          <div className="catalog__item__image__substrate">
+                            <img className="catalog__item__image"
+                                 src={ `${ item.picture }` }
+                                 alt={ '' }
+                            />
                           </div>
                         </div>
                       </div>
-                    </Link>
-                  </div>
-                )
-              })
-            }
-          </div>
-
-
+                    </div>
+                  </Link>
+                </div>
+              )
+            })
+          }
         </div>
+
 
       </div>
     </>
